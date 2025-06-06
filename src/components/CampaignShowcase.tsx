@@ -8,14 +8,14 @@ export default function CampaignShowcase() {
       title: "Gram Camp",
       videoUrl: "/videos/gramcamp.MP4",
       metrics: "14k+ views • 200+ engagement • 847% ROI",
-      description: "Transformed a startup fashion brand into the most-talked-about label of the year through strategic TikTok takeover."
+      description: "Transformed an influencer retreat into the most-talked-about retreat of the year through strategic Instagram takeover."
     },
     {
       brand: "FESTIVALS",
       title: "Freedom Fest",
       videoUrl: "/videos/freedomfest.MP4",
-      metrics: "100M+ impressions • 12M downloads • #1 App Store",
-      description: "Launched a productivity app to cultural phenomenon status through influencer-driven viral challenges."
+      metrics: "100+ ticket sales for a music festival",
+      description: "Drove ticket sales for a music festival through strategic Instagram takeover."
     },
     {
       brand: "BEAUTY BRAND",

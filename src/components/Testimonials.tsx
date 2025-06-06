@@ -5,11 +5,11 @@ export default function Testimonials() {
   const testimonials = [
     {
       type: "client",
-      name: "Sarah Chen",
-      title: "CMO, LUXE Fashion",
+      name: "David Williams",
+      title: "Executive Chef, Moody Center",
       content: "Say It Back didn't just run our campaign—they created a cultural moment. We went from unknown startup to industry leader in 90 days. The ROI was beyond our wildest dreams.",
       rating: 5,
-      metric: "847% ROI increase"
+      metric: "Landed a TV Show"
     },
     {
       type: "creator",
@@ -100,7 +100,7 @@ export default function Testimonials() {
           </div>
 
           {/* Video Testimonials Section */}
-          <div className="bg-black rounded-3xl p-12 text-center">
+          {/* <div className="bg-black rounded-3xl p-12 text-center">
             <h3 className="text-3xl font-black text-white mb-6">
               Hear It Straight From Our Partners
             </h3>
@@ -108,7 +108,7 @@ export default function Testimonials() {
               Watch exclusive video testimonials from brands and creators who've experienced the Say It Back difference.
             </p>
             
-            {/* Video Grid Placeholder */}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl flex items-center justify-center group cursor-pointer hover:from-gray-700 hover:to-gray-800 transition-all">
                 <div className="text-center">
@@ -130,7 +130,7 @@ export default function Testimonials() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

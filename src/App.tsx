@@ -1,25 +1,16 @@
 import React from 'react';
-import Hero from './components/Hero';
-import Positioning from './components/Positioning';
-import AudienceSection from './components/AudienceSection';
-import CampaignShowcase from './components/CampaignShowcase';
-import TiersSection from './components/TiersSection';
-import Testimonials from './components/Testimonials';
-import ScarcitySection from './components/ScarcitySection';
-import FinalCTA from './components/FinalCTA';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import LaunchCampaign from './components/LaunchCampaign';
+import JoinInfluencer from './components/JoinInfluencer';
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Hero />
-      <Positioning />
-      <AudienceSection />
-      <CampaignShowcase />
-      <TiersSection />
-      <Testimonials />
-      <ScarcitySection />
-      <FinalCTA />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/launch-campaign" element={<LaunchCampaign />} />
+      <Route path="/join-influencer" element={<JoinInfluencer />} />
+    </Routes>
   );
 }
 

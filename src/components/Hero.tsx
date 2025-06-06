@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -40,19 +41,25 @@ export default function Hero() {
           
           {/* Dual CTAs */}
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-16">
-            <button className="group relative px-12 py-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-lg rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/25">
+            <Link 
+              to="/launch-campaign"
+              className="group relative px-12 py-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-lg rounded-full hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/25"
+            >
               <span className="flex items-center">
                 Launch a Campaign
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
-            </button>
+            </Link>
             
-            <button className="group relative px-12 py-6 border-2 border-blue-500 text-blue-400 font-bold text-lg rounded-full hover:bg-blue-500 hover:text-black transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+            <Link 
+              to="/join-influencer"
+              className="group relative px-12 py-6 border-2 border-blue-500 text-blue-400 font-bold text-lg rounded-full hover:bg-blue-500 hover:text-black transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25"
+            >
               <span className="flex items-center">
                 Join as Influencer
                 <Play className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
-            </button>
+            </Link>
           </div>
           
           {/* Stats */}
