@@ -1,5 +1,6 @@
 import React from 'react';
 import { Play, ExternalLink, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function CampaignShowcase() {
   const campaigns = [
@@ -8,28 +9,36 @@ export default function CampaignShowcase() {
       title: "Gram Camp",
       videoUrl: "/videos/gramcamp.MP4",
       metrics: "14k+ views • 200+ engagement • 847% ROI",
-      description: "Transformed an influencer retreat into the most-talked-about retreat of the year through strategic Instagram takeover."
+      description: "Transformed an influencer retreat into the most-talked-about retreat of the year through strategic Instagram takeover.",
+      isVertical: true,
+      isYoutube: false
     },
     {
       brand: "FESTIVALS",
       title: "Freedom Fest",
       videoUrl: "/videos/freedomfest.MP4",
       metrics: "100+ ticket sales for a music festival",
-      description: "Drove ticket sales for a music festival through strategic Instagram takeover."
+      description: "Drove ticket sales for a music festival through strategic Instagram takeover.",
+      isVertical: true,
+      isYoutube: false
     },
     {
-      brand: "BEAUTY BRAND",
-      title: "Makeup Movement Revolution",
-      videoUrl: "/videos/makeup-movement.mp4",
-      metrics: "75M+ reach • 5.2M UGC posts • 1200% sales increase",
-      description: "Created a beauty trend that dominated social feeds and drove unprecedented product demand."
+      brand: "CAMPAIGN",
+      title: "Brand Showcase",
+      videoUrl: "https://www.youtube.com/embed/ll49qJykID8?controls=0&modestbranding=1&rel=0&showinfo=0&autoplay=0",
+      metrics: "Viral engagement • Brand awareness boost",
+      description: "Strategic campaign execution that delivered exceptional results through innovative content creation.",
+      isVertical: false,
+      isYoutube: true
     },
     {
-      brand: "FITNESS BRAND",
-      title: "Wellness Redefined",
-      videoUrl: "/videos/wellness-redefined.mp4",
-      metrics: "200M+ views • 8.7M participants • Global trend",
-      description: "Sparked a global fitness movement that redefined how people approach wellness and self-care."
+      brand: "CONTENT",
+      title: "Creative Campaign",
+      videoUrl: "https://www.youtube.com/embed/QFUfmq8UPlc?controls=0&modestbranding=1&rel=0&showinfo=0&autoplay=0",
+      metrics: "High engagement • Brand growth",
+      description: "Innovative content strategy that transformed brand perception and drove meaningful engagement.",
+      isVertical: false,
+      isYoutube: true
     }
   ];
 
@@ -56,34 +65,50 @@ export default function CampaignShowcase() {
             {campaigns.map((campaign, index) => (
               <div key={index} className="group bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
                 {/* Video */}
-                <div className="relative aspect-[9/16] bg-gradient-to-br from-gray-900 via-gray-800 to-black overflow-hidden">
-                  <video 
-                    className="w-full h-full object-cover"
-                    src={campaign.videoUrl}
-                    loop
-                    playsInline
-                    onMouseEnter={(e) => (e.target as HTMLVideoElement).play()}
-                    onMouseLeave={(e) => (e.target as HTMLVideoElement).pause()}
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div 
-                      className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        const video = e.currentTarget.closest('.relative')?.querySelector('video') as HTMLVideoElement;
-                        if (video) {
-                          if (video.paused) {
-                            video.play();
-                          } else {
-                            video.pause();
-                          }
-                        }
-                      }}
-                    >
-                      <Play className="w-10 h-10 text-white" />
-                    </div>
-                  </div>
+                <div className={`relative ${campaign.isVertical ? 'aspect-[9/16]' : 'aspect-video'} bg-gradient-to-br from-gray-900 via-gray-800 to-black overflow-hidden`}>
+                  {campaign.isYoutube ? (
+                    <>
+                      <iframe 
+                        className="w-full h-full object-cover"
+                        src={campaign.videoUrl}
+                        title={campaign.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors pointer-events-none"></div>
+                    </>
+                  ) : (
+                    <>
+                      <video 
+                        className="w-full h-full object-cover"
+                        src={campaign.videoUrl}
+                        loop
+                        playsInline
+                        onMouseEnter={(e) => (e.target as HTMLVideoElement).play()}
+                        onMouseLeave={(e) => (e.target as HTMLVideoElement).pause()}
+                      />
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div 
+                          className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const video = e.currentTarget.closest('.relative')?.querySelector('video') as HTMLVideoElement;
+                            if (video) {
+                              if (video.paused) {
+                                video.play();
+                              } else {
+                                video.pause();
+                              }
+                            }
+                          }}
+                        >
+                          <Play className="w-10 h-10 text-white" />
+                        </div>
+                      </div>
+                    </>
+                  )}
                   <div className="absolute top-4 left-4 bg-black/50 px-3 py-1 rounded-full text-white text-xs font-semibold">
                     {campaign.brand}
                   </div>
@@ -103,13 +128,6 @@ export default function CampaignShowcase() {
                 </div>
               </div>
             ))}
-          </div>
-
-          {/* CTA */}
-          <div className="text-center">
-            <button className="px-12 py-6 bg-gradient-to-r from-black to-gray-800 text-white font-bold text-lg rounded-full hover:from-gray-800 hover:to-black transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
-              View Full Portfolio
-            </button>
           </div>
         </div>
       </div>

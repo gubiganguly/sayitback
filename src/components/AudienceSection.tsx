@@ -1,5 +1,6 @@
 import React from 'react';
 import { Building2, Users, Rocket, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function AudienceSection() {
   return (
@@ -59,9 +60,12 @@ export default function AudienceSection() {
                   </ul>
                 </div>
 
-                <button className="w-full py-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-lg rounded-2xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105">
+                <Link 
+                  to="/launch-campaign"
+                  className="block w-full py-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-lg rounded-2xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 text-center"
+                >
                   Launch Your Domination Campaign
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -103,9 +107,12 @@ export default function AudienceSection() {
                   </ul>
                 </div>
 
-                <button className="w-full py-6 border-2 border-blue-500 text-blue-400 font-bold text-lg rounded-2xl hover:bg-blue-500 hover:text-black transition-all duration-300 transform hover:scale-105">
+                <Link 
+                  to="/join-influencer"
+                  className="block w-full py-6 border-2 border-blue-500 text-blue-400 font-bold text-lg rounded-2xl hover:bg-blue-500 hover:text-black transition-all duration-300 transform hover:scale-105 text-center"
+                >
                   Join Our Elite Creator Network
-                </button>
+                </Link>
               </div>
             </div>
           </div>

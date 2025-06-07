@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Send, User, Mail, Users, Hash, MapPin, MessageSquare, Play } from 'lucide-react';
+import { ArrowLeft, Send, User, Mail, Users, Hash, MapPin, MessageSquare, Play, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { saveInfluencerApplication } from '../../lib/firebase/leads/leadsModel';
 
 export default function JoinInfluencer() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,10 @@ export default function JoinInfluencer() {
     tellUsMore: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -22,10 +27,38 @@ export default function JoinInfluencer() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Influencer form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      const result = await saveInfluencerApplication(formData);
+      
+      if (result.success) {
+        setSubmitStatus('success');
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          platform: '',
+          handle: '',
+          followerCount: '',
+          contentNiche: '',
+          location: '',
+          tellUsMore: ''
+        });
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage('Failed to submit your application. Please try again.');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('An unexpected error occurred. Please try again.');
+      console.error('Influencer application error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -243,15 +276,41 @@ export default function JoinInfluencer() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="group relative w-full px-8 md:px-12 py-4 md:py-6 bg-gradient-to-r from-blue-400 to-blue-500 text-white font-bold text-base md:text-lg rounded-xl hover:from-blue-300 hover:to-blue-400 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-blue-500/25"
+                  disabled={isSubmitting}
+                  className="group relative w-full px-8 md:px-12 py-4 md:py-6 bg-gradient-to-r from-blue-400 to-blue-500 text-white font-bold text-base md:text-lg rounded-xl hover:from-blue-300 hover:to-blue-400 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   <span className="flex items-center justify-center">
-                    <span className="hidden sm:inline">Join as Influencer</span>
-                    <span className="sm:hidden">Join Now</span>
-                    <Send className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2 md:mr-3"></div>
+                        <span className="hidden sm:inline">Submitting...</span>
+                        <span className="sm:hidden">Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="hidden sm:inline">Join as Influencer</span>
+                        <span className="sm:hidden">Join Now</span>
+                        <Send className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
                   </span>
                 </button>
               </div>
+
+              {/* Success/Error Messages */}
+              {submitStatus === 'success' && (
+                <div className="flex items-center justify-center p-4 bg-green-900/30 border border-green-700 rounded-xl text-green-300">
+                  <CheckCircle className="w-5 h-5 mr-2" />
+                  <span>Application submitted successfully! We'll review within 48 hours.</span>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="flex items-center justify-center p-4 bg-red-900/30 border border-red-700 rounded-xl text-red-300">
+                  <AlertCircle className="w-5 h-5 mr-2" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
 
               {/* Footer Note */}
               <div className="text-center pt-4">

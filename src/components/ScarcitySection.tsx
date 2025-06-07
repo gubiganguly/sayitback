@@ -1,5 +1,6 @@
 import React from 'react';
 import { Clock, AlertTriangle, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function ScarcitySection() {
   return (
@@ -60,9 +61,12 @@ export default function ScarcitySection() {
           
           {/* CTA */}
           <div className="space-y-4">
-            <button className="px-12 py-6 bg-white text-red-700 font-black text-xl rounded-full hover:bg-red-50 transition-all duration-300 transform hover:scale-105 shadow-2xl">
+            <Link 
+              to="/launch-campaign"
+              className="inline-block px-12 py-6 bg-white text-red-700 font-black text-xl rounded-full hover:bg-red-50 transition-all duration-300 transform hover:scale-105 shadow-2xl"
+            >
               Secure Your Slot Now
-            </button>
+            </Link>
             <p className="text-red-200 text-sm">
               ⚡ Applications reviewed within 24 hours
             </p>

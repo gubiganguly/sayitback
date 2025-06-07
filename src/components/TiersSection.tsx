@@ -1,5 +1,6 @@
 import React from 'react';
 import { Check, Star, Crown, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function TiersSection() {
   const tiers = [
@@ -116,13 +117,16 @@ export default function TiersSection() {
                 </div>
 
                 {/* CTA */}
-                <button className={`w-full py-4 font-bold text-lg rounded-2xl transition-all duration-300 ${
-                  tier.popular 
-                    ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-300 hover:to-yellow-400' 
-                    : 'border-2 border-gray-600 text-gray-300 hover:border-white hover:text-white'
-                }`}>
+                <Link 
+                  to="/launch-campaign"
+                  className={`block w-full py-4 font-bold text-lg rounded-2xl transition-all duration-300 text-center ${
+                    tier.popular 
+                      ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-black hover:from-yellow-300 hover:to-yellow-400' 
+                      : 'border-2 border-gray-600 text-gray-300 hover:border-white hover:text-white'
+                  }`}
+                >
                   {tier.cta}
-                </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -133,9 +137,12 @@ export default function TiersSection() {
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
               Every brand is unique. Let's create a bespoke campaign strategy that perfectly fits your vision and budget.
             </p>
-            <button className="px-12 py-6 border-2 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-black transition-all duration-300">
+            <Link 
+              to="/launch-campaign"
+              className="inline-block px-12 py-6 border-2 border-white text-white font-bold text-lg rounded-full hover:bg-white hover:text-black transition-all duration-300"
+            >
               Let's Talk Custom Solutions
-            </button>
+            </Link>
           </div>
         </div>
       </div>

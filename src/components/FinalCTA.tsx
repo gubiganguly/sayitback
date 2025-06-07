@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Play, Star, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function FinalCTA() {
   return (
@@ -54,12 +55,15 @@ export default function FinalCTA() {
                   ROI-focused execution
                 </li>
               </ul>
-              <button className="w-full py-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-xl rounded-2xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 group">
+              <Link 
+                to="/launch-campaign"
+                className="block w-full py-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-xl rounded-2xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 group"
+              >
                 <span className="flex items-center justify-center">
                   Launch Your Campaign
                   <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
-              </button>
+              </Link>
             </div>
 
             {/* Creator CTA */}
@@ -86,12 +90,15 @@ export default function FinalCTA() {
                   Long-term growth strategy
                 </li>
               </ul>
-              <button className="w-full py-6 border-2 border-blue-500 text-blue-400 font-bold text-xl rounded-2xl hover:bg-blue-500 hover:text-black transition-all duration-300 transform hover:scale-105 group">
+              <Link 
+                to="/join-influencer"
+                className="block w-full py-6 border-2 border-blue-500 text-blue-400 font-bold text-xl rounded-2xl hover:bg-blue-500 hover:text-black transition-all duration-300 transform hover:scale-105 group"
+              >
                 <span className="flex items-center justify-center">
                   Join Creator Network
                   <Play className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
 

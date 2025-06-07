@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Send, User, Mail, Building, Globe, Instagram, Video, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Send, User, Mail, Building, Globe, Instagram, Video, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { saveCampaignLead } from '../../lib/firebase/leads/leadsModel';
 
 export default function LaunchCampaign() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,10 @@ export default function LaunchCampaign() {
     tellUsMore: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -21,10 +26,37 @@ export default function LaunchCampaign() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      const result = await saveCampaignLead(formData);
+      
+      if (result.success) {
+        setSubmitStatus('success');
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          businessName: '',
+          website: '',
+          instagramHandle: '',
+          tiktokHandle: '',
+          tellUsMore: ''
+        });
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage('Failed to submit your campaign. Please try again.');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('An unexpected error occurred. Please try again.');
+      console.error('Campaign submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -209,15 +241,41 @@ export default function LaunchCampaign() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="group relative w-full px-8 md:px-12 py-4 md:py-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-base md:text-lg rounded-xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-yellow-500/25"
+                  disabled={isSubmitting}
+                  className="group relative w-full px-8 md:px-12 py-4 md:py-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-bold text-base md:text-lg rounded-xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-yellow-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   <span className="flex items-center justify-center">
-                    <span className="hidden sm:inline">Launch My Campaign</span>
-                    <span className="sm:hidden">Launch Campaign</span>
-                    <Send className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-black border-t-transparent rounded-full animate-spin mr-2 md:mr-3"></div>
+                        <span className="hidden sm:inline">Submitting...</span>
+                        <span className="sm:hidden">Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="hidden sm:inline">Launch My Campaign</span>
+                        <span className="sm:hidden">Launch Campaign</span>
+                        <Send className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
                   </span>
                 </button>
               </div>
+
+              {/* Success/Error Messages */}
+              {submitStatus === 'success' && (
+                <div className="flex items-center justify-center p-4 bg-green-900/30 border border-green-700 rounded-xl text-green-300">
+                  <CheckCircle className="w-5 h-5 mr-2" />
+                  <span>Campaign submitted successfully! We'll contact you within 24 hours.</span>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="flex items-center justify-center p-4 bg-red-900/30 border border-red-700 rounded-xl text-red-300">
+                  <AlertCircle className="w-5 h-5 mr-2" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
 
               {/* Footer Note */}
               <div className="text-center pt-4">
